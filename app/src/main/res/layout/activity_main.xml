@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#97A3ED"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:background="#DF7373"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_height="wrap_content"
+            android:id="@+id/relative"
+            android:padding="5dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_toLeftOf="@+id/addBt"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/corner"
+                android:hint="Enter Item"
+                android:textColor="@color/black"
+                android:paddingLeft="5dp"
+                android:id="@+id/addEt"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@color/purple_500"
+                android:layout_alignParentRight="true"
+                android:text="Add"
+                android:id="@+id/addBt"/>
+
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:id="@+id/recycle"
+            android:layout_below="@+id/relative"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
