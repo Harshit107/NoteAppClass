@@ -2,10 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#3100FFFF"
-    android:layout_marginEnd="10dp"
-    android:layout_marginStart="10dp"
+
     android:layout_marginTop="10dp"
+    android:background="@drawable/light_corner"
     android:layout_height="wrap_content">
 
     <TextView
@@ -15,7 +14,9 @@
         android:text="Item"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:padding="5dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="5dp"
         />
     <ImageView
         android:id="@+id/close"
@@ -25,7 +26,9 @@
         app:tint="@color/black"
         android:src="@drawable/ic_baseline_close_24"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp"
+        android:paddingTop="10dp"
+        android:layout_marginTop="5dp"
+        android:paddingBottom="10dp"
         />
 
 </RelativeLayout>
