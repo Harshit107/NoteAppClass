@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,17 +19,15 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
     Button itemBt;
 
     DatabaseReference databaseReference;
+    ProgressDialog pbar;
 
+    FirebaseUser mUser ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,24 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycle);
         itemBt = findViewById(R.id.addBt);
         itemEt = findViewById(R.id.addEt);
+
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(mUser == null) {
+            Intent it = new Intent(getApplicationContext(), Login.class);
+            startActivity(it);
+            return;
+        }
+
         databaseReference =  FirebaseDatabase.getInstance().getReference().child("users");
+
+
+        //progress dialogue
+        pbar = new ProgressDialog(this);
+        pbar.setMessage("Please Wait...");
+        pbar.setCanceledOnTouchOutside(false);
+        pbar.show();
+
 
 
         listAdapter = new ListAdapter(getApplicationContext(), lists, this);
@@ -82,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
 
         //list => String , Integer list.contains(
         //list => MyList-> string )
-
 
         itemBt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,16 +186,16 @@ public class MainActivity extends AppCompatActivity {
                         String key = myData.getKey().toString();
                         String value = myData.getValue().toString();
                         lists.add(new MyList(value,key));
-
                     }
                     listAdapter.renewItem(lists);
-
+                    Log.d(TAG, lists.size()+" ");
                 }
+                pbar.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                pbar.dismiss();
             }
         });
 
@@ -218,17 +236,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void removeItem(int pos) {
         String id = lists.get(pos).getId();
-        databaseReference.child(id).removeValue().addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
-            }
-        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        lists.remove(pos);
-                    }
-        });
+        databaseReference.child(id).removeValue();
+        lists.remove(pos);
 
     }
 

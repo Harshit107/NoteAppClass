@@ -44,8 +44,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder>{
             @Override
             public void onClick(View view) {
 //                Toast.makeText(context, holder.getAdapterPosition()+"",Toast.LENGTH_SHORT).show();
-                arrayList.remove(holder.getAdapterPosition());
                 removeFromMain(holder.getAdapterPosition());
+                arrayList.remove(holder.getAdapterPosition());
                 notifyDataSetChanged();
             }
         });
@@ -53,8 +53,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder>{
             @Override
             public boolean onLongClick(View view) {
                 String text = arrayList.get(holder.getAdapterPosition()).getText();
-                arrayList.remove(holder.getAdapterPosition());
                 removeFromMain(holder.getAdapterPosition());
+                arrayList.remove(holder.getAdapterPosition());
                 notifyDataSetChanged();
                 ((MainActivity)activity).editView(text);
 
@@ -89,6 +89,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder>{
 
     public void removeFromMain(int pos) {
         ((MainActivity)activity).removeItem(pos);
+
     }
 
 
